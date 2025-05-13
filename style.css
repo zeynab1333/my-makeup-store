@@ -234,10 +234,11 @@ input, select {
         align-items: center;
     }
 
-    nav ul {
+   nav ul {
         flex-direction: row;
         gap: 10px;
-        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
     .product, .category {
@@ -262,11 +263,6 @@ input, select {
 
     .social-icons {
         justify-content: center;
-    }
-
-    .navbar {
-        flex-direction: row;
-        align-items: center;
     }
 }
 
