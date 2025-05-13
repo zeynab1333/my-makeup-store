@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zbeauty - Categories</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="storeName">💄 Zbeauty</div>
+        <ul class="navbar">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="categories.html" class="active">Categories</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="blurredBackground">
+        <!-- Categories Section -->
+        <h2 class="section-heading">Product Categories</h2>
+        <section id="categories">
+            <div class="category">
+                <h3>Face products</h3>
+                <img src="https://images.pexels.com/photos/9348325/pexels-photo-9348325.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Foundation" class="product-image" />
+                <p>Explore our wide range of foundations.</p>
+                <p class="numberOfProducts">140 products</p>
+                <button onclick="addToCart('Foundation')">Add to Cart</button>
+            </div>
+            <div class="category">
+                <h3>Lipstick shades</h3>
+                <img src="https://images.pexels.com/photos/1161931/pexels-photo-1161931.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Lipstick" class="product-image" />
+                <p>Find your perfect shade of lipstick.</p>
+                <p class="numberOfProducts">10 shades</p>
+                <button onclick="addToCart('Lipstick')">Add to Cart</button>
+            </div>
+            <div class="category">
+                <h3>Eye products</h3>
+                <img src="https://images.pexels.com/photos/3912572/pexels-photo-3912572.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Eyeshadow" class="product-image" />
+                <p>Vibrant shades for all your eye makeup needs.</p>
+                <p class="numberOfProducts">100 products</p>
+                <button onclick="addToCart('Eyeshadow')">Add to Cart</button>
+            </div>
+            <div class="category">
+                <h3>Lashes product</h3>
+                <img src="https://images.pexels.com/photos/16465930/pexels-photo-16465930/free-photo-of-brown-eye-of-a-young-woman.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Mascara" class="product-image" />
+                <p>Define and lengthen your lashes with ease.</p>
+                <p class="numberOfProducts">50 products</p>
+                <button onclick="addToCart('Mascara')">Add to Cart</button>
+            </div>
+            <div class="category">
+                <h3>Blush types</h3>
+                <img src="https://images.pexels.com/photos/14813800/pexels-photo-14813800.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Blush" class="product-image" />
+                <p>Get a natural flush of color with our blushes.</p>
+                <p class="numberOfProducts">5 types</p>
+                <button onclick="addToCart('Blush')">Add to Cart</button>
+            </div>
+            <div class="category">
+                <h3>Highlighter types</h3>
+                <img src="https://images.pexels.com/photos/12698452/pexels-photo-12698452.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Highlighter" class="product-image" />
+                <p>Glow up your look with our luminous highlighters.</p>
+                <p class="numberOfProducts">3 types</p>
+                <button onclick="addToCart('Highlighter')">Add to Cart</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="product-details-modal" class="modal" style="display:none;">
+        <h2>Product Details</h2>
+        <div id="product-details-content">
+            <!-- Product details will show here -->
+        </div>
+        <button onclick="closeModal()">Close</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section about">
+                <h2>Zbeauty</h2>
+                <p>Your trusted source for premium makeup and beauty products.</p>
+            </div>
+
+            <div class="footer-section links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="categories.html">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section social">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            &copy; 2025 Zbeauty. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

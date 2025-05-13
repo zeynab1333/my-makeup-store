@@ -125,12 +125,37 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Highlight active navbar link
+    // Highlight active navbar link and set active based on current page
     const links = document.querySelectorAll('.navbar li a');
+    function setActiveLink() {
+        const currentPath = window.location.pathname.split("/").pop();
+        links.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
     links.forEach(link => {
-        link.addEventListener('click', () => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
             links.forEach(l => l.classList.remove('active'));
             link.classList.add('active');
+            const href = link.getAttribute('href');
+            document.body.style.transition = "opacity 0.5s ease-out";
+            document.body.style.opacity = 0;
+            setTimeout(() => {
+                window.location.href = href;
+            }, 500);
         });
     });
+    setActiveLink();
+
+    // Page transition animation
+    document.body.style.opacity = 0;
+    window.onload = () => {
+        document.body.style.transition = "opacity 0.5s ease-in";
+        document.body.style.opacity = 1;
+    };
 });
