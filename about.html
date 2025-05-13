@@ -1,90 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Zbeauty - About</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Zbeauty</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav>
-        <div class="storeName">💄 Zbeauty</div>
-        <ul class="navbar">
-            <li><a href="home.html">Home</a></li>
-            <li><a href="categories.html">Categories</a></li>
-            <li><a href="cart.html">Cart</a></li>
+    <nav class="sticky-nav">
+        <div class="logo">Zbeauty ✨</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="categories.html">Shop</a></li>
+            <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> <span class="cart-count">0</span></a></li>
             <li><a href="about.html" class="active">About</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
+        <div class="hamburger">☰</div>
     </nav>
 
-    <!-- About Section -->
-    <section id="about">
-        <h2 class="aboutMe">About Zbeauty</h2>
-        <div class="about-container">
-            <div class="about-text">
-                <p>Zbeauty was founded in 2024 to meet the growing demand for makeup products, so we created an online store so that we can deliver your items without struggling to go out. So Zbeauty  is your trusted online store for high-quality, affordable makeup. We believe every woman deserves to feel beautiful, confident, and radiant — and that starts with the right products.</p>
-                <p>From flawless foundations to bold lipsticks and shimmering highlighters, we bring you a carefully selected collection of the best in beauty.</p>
-                <div class="founder-section">
-                    <h3>Meet the Founder</h3>
-                    <p><strong>Zeynab Feysal</strong>, a passionate beauty lover and entrepreneur, started Zbeauty in 2024 with a mission to make beauty products more accessible for everyone in Kenya. Her goal is to help every woman feel confident in her skin without breaking the bank.</p>
-                    <br /><br />
-                    <h4>Our Team</h4>
-                    <p>Our growing team is made up of creative, dedicated individuals who are committed to delivering the best beauty experience — from curating top-notch products to ensuring smooth delivery right to your door.</p>
+    <main class="about-page">
+        <section class="about-hero">
+            <h1>Our Beauty Story</h1>
+            <p>Empowering your unique beauty journey with premium, cruelty-free products</p>
+        </section>
+
+        <section class="our-story">
+            <div class="story-content">
+                <h2>Who We Are</h2>
+                <p>Founded in 2020, Zbeauty began as a small passion project between two makeup artists who believed in the power of clean, high-performance beauty products. Today, we've grown into a beloved brand trusted by thousands of beauty enthusiasts worldwide.</p>
+                <p>Our mission is simple: to provide luxurious, ethical beauty products that make you feel as good as you look.</p>
+            </div>
+            <div class="story-image">
+                <img src="assets/images/about-team.jpg" alt="Zbeauty team">
+            </div>
+        </section>
+
+        <section class="values-section">
+            <h2>Our Core Values</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Cruelty-Free</h3>
+                    <p>All our products are 100% vegan and never tested on animals.</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-gem"></i>
+                    <h3>Premium Quality</h3>
+                    <p>We source only the finest ingredients for exceptional results.</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Inclusivity</h3>
+                    <p>Beauty for all ages, skin types, and tones.</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-globe"></i>
+                    <h3>Sustainability</h3>
+                    <p>Eco-friendly packaging and responsible sourcing.</p>
                 </div>
             </div>
-            <div class="about-images">
-                <img src="https://images.pexels.com/photos/1926620/pexels-photo-1926620.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Makeup 1" />
-                <img src="https://images.pexels.com/photos/3018845/pexels-photo-3018845.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Makeup 2" />
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Product Detail Modal -->
-    <div id="product-details-modal" class="modal" style="display:none;">
-        <h2>Product Details</h2>
-        <div id="product-details-content">
-            <!-- Product details will show here -->
-        </div>
-        <button onclick="closeModal()">Close</button>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section about">
-                <h2>Zbeauty</h2>
-                <p>Your trusted source for premium makeup and beauty products.</p>
-            </div>
-
-            <div class="footer-section links">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="categories.html">Shop</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section social">
-                <h3>Follow Us</h3>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-tiktok"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
+        <section class="team-section">
+            <h2>Meet The Founders</h2>
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="assets/images/founder1.jpg" alt="Zeynab">
+                    <h3>Zeynab</h3>
+                    <p class="title">Chief Creative Officer</p>
+                    <p>With 10+ years in the beauty industry, Zeynab brings innovative product development and artistic vision to Zbeauty.</p>
+                </div>
+                <div class="team-card">
+                    <img src="assets/images/founder2.jpg" alt="Sarah">
+                    <h3>Sarah</h3>
+                    <p class="title">CEO</p>
+                    <p>Business strategist and beauty enthusiast, Sarah ensures Zbeauty stays true to its values while growing sustainably.</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="footer-bottom">
-            &copy; 2025 Zeybeauty. All rights reserved.
-        </div>
+        <section class="testimonials">
+            <h2>What Our Customers Say</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"The matte lipsticks are the most comfortable I've ever worn. I own every shade!"</p>
+                    <p class="author">- Jessica M.</p>
+                </div>
+                <!-- More testimonials -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Same footer as contact.html -->
     </footer>
 
-    <script src="script.js"></script>
+    <script src="assets/js/script.js" type="module"></script>
 </body>
 </html>

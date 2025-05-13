@@ -1,305 +1,411 @@
-// ==============================
-// 🛒 Cart Logic with localStorage and Toast Notifications
-// ==============================
-
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-const productPrices = {
-    "Lipstick": 15.00,
-    "Foundation": 25.00,
-    "Mascara": 18.00,
-    "Eyeshadow": 20.00,
-    "Highlighter": 14.00,
-    "Blush": 12.00
+// ========== GLOBAL STATE & ELEMENTS ==========
+const state = {
+  cart: JSON.parse(localStorage.getItem('zbeauty-cart')) || [],
+  products: [
+    {
+      id: 1,
+      name: "Matte Liquid Lipstick",
+      price: 18.99,
+      category: "lips",
+      rating: 4.8,
+      image: "assets/images/lipstick.jpg",
+      colors: ["#cc3366", "#990033", "#ff6699"],
+      description: "Long-lasting matte finish with creamy application"
+    },
+    {
+      id: 2,
+      name: "Hydrating Foundation",
+      price: 24.99,
+      category: "face",
+      rating: 4.6,
+      image: "assets/images/foundation.jpg",
+      shades: ["#f5d0b9", "#e3b18b", "#d19470"],
+      description: "Lightweight formula with 12-hour hydration"
+    },
+    // Add more products as needed
+  ]
 };
 
-function scrollToCategories() {
-    document.getElementById("categories").scrollIntoView({ behavior: "smooth" });
-}
+// DOM Elements
+const elements = {
+  nav: document.querySelector('.sticky-nav'),
+  cartCount: document.querySelector('.cart-count'),
+  hamburger: document.querySelector('.hamburger'),
+  navLinks: document.querySelector('.nav-links'),
+  // Page-specific elements will be added as needed
+};
 
-function showToast(message) {
-    let toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 100);
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => document.body.removeChild(toast), 300);
-    }, 3000);
-}
+// ========== CART FUNCTIONALITY ==========
+const cartFunctions = {
+  addToCart: (productId, quantity = 1) => {
+    const product = state.products.find(p => p.id === productId);
+    if (!product) return;
 
-function addToCart(productName) {
-    if (!cart.includes(productName)) {
-        cart.push(productName);
-        updateCartDisplay();
-        localStorage.setItem('cart', JSON.stringify(cart));
-        showToast(productName + " has been added to your cart.");
+    const existingItem = state.cart.find(item => item.id === productId);
+    
+    if (existingItem) {
+      existingItem.quantity += quantity;
     } else {
-        showToast(productName + " is already in your cart.");
+      state.cart.push({ ...product, quantity });
     }
-}
+    
+    cartFunctions.updateCart();
+    cartFunctions.showCartNotification(product.name);
+  },
 
-function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCartDisplay();
-    localStorage.setItem('cart', JSON.stringify(cart));
-    showToast("Item removed from cart.");
-}
+  removeFromCart: (productId) => {
+    state.cart = state.cart.filter(item => item.id !== productId);
+    cartFunctions.updateCart();
+  },
 
-function updateCartDisplay() {
-    const cartItemsContainer = document.getElementById("cart-items");
-    if (!cartItemsContainer) return;
-
-    if (cart.length === 0) {
-        cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
-    } else {
-        cartItemsContainer.innerHTML = "";
-        const list = document.createElement("ul");
-        let total = 0;
-
-        cart.forEach((item, index) => {
-            const li = document.createElement("li");
-            const price = productPrices[item] || 0;
-            total += price;
-
-            li.textContent = `${item} - $${price.toFixed(2)} `;
-
-            const removeBtn = document.createElement("button");
-            removeBtn.textContent = "Remove";
-            removeBtn.classList.add("remove-btn");
-            removeBtn.onclick = () => removeFromCart(index);
-
-            li.appendChild(removeBtn);
-            list.appendChild(li);
-        });
-
-        const totalDisplay = document.createElement("p");
-        totalDisplay.innerHTML = `<strong>Total: $${total.toFixed(2)}</strong>`;
-        cartItemsContainer.appendChild(list);
-        cartItemsContainer.appendChild(totalDisplay);
+  updateQuantity: (productId, newQuantity) => {
+    const item = state.cart.find(item => item.id === productId);
+    if (item) {
+      item.quantity = Math.max(1, newQuantity);
+      cartFunctions.updateCart();
     }
-}
+  },
 
-function checkout() {
-    if (cart.length === 0) {
-        showToast("Your cart is empty.");
-        return;
+  updateCart: () => {
+    localStorage.setItem('zbeauty-cart', JSON.stringify(state.cart));
+    cartFunctions.updateCartCount();
+    
+    // Update cart page if we're on it
+    if (document.querySelector('.cart-page')) {
+      cartFunctions.renderCartItems();
     }
+  },
 
-    const checkoutSection = document.getElementById("checkout");
-    if (checkoutSection) {
-        checkoutSection.style.display = "block";
-        document.getElementById("checkout-form").scrollIntoView({ behavior: "smooth" });
+  updateCartCount: () => {
+    if (elements.cartCount) {
+      const count = state.cart.reduce((sum, item) => sum + item.quantity, 0);
+      elements.cartCount.textContent = count;
+      elements.cartCount.style.display = count > 0 ? 'inline-block' : 'none';
     }
-}
+  },
 
-// ==============================
-// 📦 Modal Logic
-// ==============================
-
-function openProductModal(productName) {
-    const modal = document.getElementById("product-details-modal");
-    const content = document.getElementById("product-details-content");
-    if (!modal || !content) return;
-
-    // Mock product details - can be enhanced with real data
-    const productDetails = {
-        "Lipstick": "Huda Beauty Nude Lipstick - Dark red. Perfect for any occasion.",
-        "Foundation": "MAC Studio Fix Foundation. Perfect coverage for a flawless look.",
-        "Mascara": "Maybelline Lash Sensational Mascara. Define and lengthen your lashes with ease.",
-        "Eyeshadow": "Maybelline Smoky Eyeshadow Palette. Create vibrant looks with our eyeshadow collection.",
-        "Highlighter": "Fenty Beauty Killawatt Highlighter. Glow like never before with our shimmering highlighter.",
-        "Blush": "Milani Baked Blush. Get a natural flush of color with our blushes."
-    };
-
-    content.innerHTML = `
-        <h3>${productName}</h3>
-        <p>${productDetails[productName] || "No details available."}</p>
-        <p><strong>Price: $${productPrices[productName].toFixed(2)}</strong></p>
-        <button onclick="addToCart('${productName}')">Add to Cart</button>
+  showCartNotification: (productName) => {
+    const notification = document.createElement('div');
+    notification.className = 'cart-notification';
+    notification.innerHTML = `
+      <span>${productName} added to cart!</span>
+      <a href="cart.html">View Cart</a>
     `;
-    modal.style.display = "block";
-}
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.classList.add('show');
+    }, 10);
+    
+    setTimeout(() => {
+      notification.classList.remove('show');
+      setTimeout(() => notification.remove(), 300);
+    }, 3000);
+  },
 
-function closeModal() {
-    const modal = document.getElementById("product-details-modal");
-    if (modal) modal.style.display = "none";
-}
-
-// ==============================
-// 📩 Form Handling with inline validation and toast notifications
-// ==============================
-
-document.addEventListener("DOMContentLoaded", function () {
-    const contactForm = document.getElementById("contact-form");
-    const checkoutForm = document.getElementById("checkout-form");
-
-    if (contactForm) {
-        contactForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-            if (!validateContactForm()) return;
-            showToast("Thanks for your message! We'll get back to you soon.");
-            contactForm.reset();
-        });
+  renderCartItems: () => {
+    const cartItemsEl = document.getElementById('cart-items');
+    const subtotalEl = document.getElementById('subtotal');
+    const totalEl = document.getElementById('total');
+    const checkoutBtn = document.getElementById('checkout-btn');
+    
+    if (!cartItemsEl) return;
+    
+    if (state.cart.length === 0) {
+      cartItemsEl.innerHTML = `
+        <div class="empty-cart">
+          <i class="fas fa-shopping-bag"></i>
+          <p>Your cart is empty</p>
+          <a href="categories.html" class="btn">Continue Shopping</a>
+        </div>
+      `;
+      subtotalEl.textContent = '$0.00';
+      totalEl.textContent = '$0.00';
+      checkoutBtn.disabled = true;
+      return;
     }
+    
+    cartItemsEl.innerHTML = state.cart.map(item => `
+      <div class="cart-item" data-id="${item.id}">
+        <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+        <div class="cart-item-details">
+          <h3 class="cart-item-title">${item.name}</h3>
+          <p class="cart-item-price">$${item.price.toFixed(2)}</p>
+          <div class="cart-item-quantity">
+            <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+            <span>${item.quantity}</span>
+            <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+        <button class="remove-item"><i class="fas fa-trash-alt"></i></button>
+      </div>
+    `).join('');
+    
+    const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+    totalEl.textContent = `$${subtotal.toFixed(2)}`;
+    checkoutBtn.disabled = false;
+  }
+};
 
-    if (checkoutForm) {
-        checkoutForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-            if (!validateCheckoutForm()) return;
-            const name = document.getElementById("name")?.value || "Customer";
-            showToast("Thank you for your purchase, " + name + "!");
-            cart = [];
-            updateCartDisplay();
-            localStorage.setItem('cart', JSON.stringify(cart));
-            checkoutForm.reset();
-            document.getElementById("checkout").style.display = "none";
-        });
-    }
+// ========== PRODUCT FUNCTIONALITY ==========
+const productFunctions = {
+  renderFeaturedProducts: () => {
+    const featuredContainer = document.getElementById('featured-products');
+    if (!featuredContainer) return;
+    
+    const featured = state.products.slice(0, 4);
+    featuredContainer.innerHTML = featured.map(product => `
+      <div class="product-card" data-id="${product.id}">
+        <img src="${product.image}" alt="${product.name}" loading="lazy">
+        <h3>${product.name}</h3>
+        <div class="price">$${product.price.toFixed(2)}</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    `).join('');
+  },
 
-    // Highlight active navbar link and set active based on current page
-    const links = document.querySelectorAll('.navbar li a');
-    function setActiveLink() {
-        const currentPath = window.location.pathname.split("/").pop();
-        links.forEach(link => {
-            if (link.getAttribute('href') === currentPath) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        });
-    }
-    links.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            links.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
-            const href = link.getAttribute('href');
-            document.body.style.transition = "opacity 0.5s ease-out";
-            document.body.style.opacity = 0;
-            setTimeout(() => {
-                window.location.href = href;
-            }, 500);
-        });
+  renderAllProducts: () => {
+    const productsContainer = document.getElementById('all-products');
+    if (!productsContainer) return;
+    
+    productsContainer.innerHTML = state.products.map(product => `
+      <div class="product-card" data-id="${product.id}">
+        <img src="${product.image}" alt="${product.name}" loading="lazy">
+        <div class="product-badge">${product.category}</div>
+        <h3>${product.name}</h3>
+        <div class="price-rating">
+          <span class="price">$${product.price.toFixed(2)}</span>
+          <span class="rating"><i class="fas fa-star"></i> ${product.rating}</span>
+        </div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    `).join('');
+  },
+
+  setupFilters: () => {
+    const categoryLinks = document.querySelectorAll('.category-list a');
+    const sortSelect = document.getElementById('sort-select');
+    
+    categoryLinks?.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const category = link.dataset.category;
+        productFunctions.filterProducts(category);
+        
+        // Update active state
+        categoryLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      });
     });
-    setActiveLink();
-
-    // Page transition animation
-    document.body.style.opacity = 0;
-    window.onload = () => {
-        document.body.style.transition = "opacity 0.5s ease-in";
-        document.body.style.opacity = 1;
-    };
-});
-
-// Smooth scroll for nav links and hamburger menu toggle
-document.addEventListener("DOMContentLoaded", function () {
-    const hamburger = document.getElementById("hamburger");
-    const navbarMenu = document.getElementById("navbarMenu");
-
-    if (hamburger && navbarMenu) {
-        hamburger.addEventListener("click", () => {
-            const expanded = hamburger.getAttribute("aria-expanded") === "true" || false;
-            hamburger.setAttribute("aria-expanded", !expanded);
-            navbarMenu.classList.toggle("show");
-        });
-        hamburger.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") {
-                hamburger.click();
-            }
-        });
-    }
-
-    const navLinks = document.querySelectorAll('.navbar li a[href^="#"]');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            const targetElement = document.getElementById(targetId);
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth' });
-            }
-            // Close mobile menu if open
-            if (navbarMenu.classList.contains('show')) {
-                navbarMenu.classList.remove('show');
-                hamburger.setAttribute("aria-expanded", false);
-            }
-        });
+    
+    sortSelect?.addEventListener('change', (e) => {
+      productFunctions.sortProducts(e.target.value);
     });
-});
+  },
 
-// ==============================
-// Form Validation Functions
-// ==============================
+  filterProducts: (category) => {
+    const productsContainer = document.getElementById('all-products');
+    if (!productsContainer) return;
+    
+    const filtered = category === 'all' 
+      ? state.products 
+      : state.products.filter(p => p.category === category);
+    
+    productsContainer.innerHTML = filtered.map(product => `
+      <div class="product-card" data-id="${product.id}">
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <div class="price">$${product.price.toFixed(2)}</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    `).join('');
+  },
 
-function validateContactForm() {
-    const name = document.getElementById("user-name");
-    const email = document.getElementById("user-email");
-    const message = document.getElementById("message");
-    let valid = true;
-
-    clearErrors([name, email, message]);
-
-    if (!name.value.trim()) {
-        showError(name, "Name is required.");
-        valid = false;
+  sortProducts: (sortType) => {
+    let sortedProducts = [...state.products];
+    
+    switch(sortType) {
+      case 'price-asc':
+        sortedProducts.sort((a, b) => a.price - b.price);
+        break;
+      case 'price-desc':
+        sortedProducts.sort((a, b) => b.price - a.price);
+        break;
+      case 'rating':
+        sortedProducts.sort((a, b) => b.rating - a.rating);
+        break;
+      case 'newest':
+        // Assuming newer products have higher IDs
+        sortedProducts.sort((a, b) => b.id - a.id);
+        break;
     }
-    if (!email.value.trim() || !validateEmail(email.value)) {
-        showError(email, "Valid email is required.");
-        valid = false;
+    
+    const productsContainer = document.getElementById('all-products');
+    if (productsContainer) {
+      productsContainer.innerHTML = sortedProducts.map(product => `
+        <div class="product-card" data-id="${product.id}">
+          <img src="${product.image}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <div class="price">$${product.price.toFixed(2)}</div>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      `).join('');
     }
-    if (!message.value.trim()) {
-        showError(message, "Message cannot be empty.");
-        valid = false;
-    }
-    return valid;
-}
+  }
+};
 
-function validateCheckoutForm() {
-    const name = document.getElementById("name");
-    const address = document.getElementById("address");
-    const payment = document.getElementById("payment");
-    let valid = true;
+// ========== PAGE-SPECIFIC FUNCTIONALITY ==========
+const pageFunctions = {
+  initHomePage: () => {
+    productFunctions.renderFeaturedProducts();
+    
+    // Newsletter form
+    const newsletterForm = document.getElementById('newsletter-form');
+    newsletterForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = e.target.querySelector('input').value;
+      e.target.innerHTML = `
+        <p class="success-message">Thanks for subscribing! Check your email for a 15% discount code.</p>
+      `;
+    });
+  },
 
-    clearErrors([name, address, payment]);
+  initCategoriesPage: () => {
+    productFunctions.renderAllProducts();
+    productFunctions.setupFilters();
+  },
 
-    if (!name.value.trim()) {
-        showError(name, "Name is required.");
-        valid = false;
-    }
-    if (!address.value.trim()) {
-        showError(address, "Shipping address is required.");
-        valid = false;
-    }
-    if (!payment.value) {
-        showError(payment, "Please select a payment method.");
-        valid = false;
-    }
-    return valid;
-}
-
-function showError(element, message) {
-    let error = document.createElement("span");
-    error.className = "error-message";
-    error.textContent = message;
-    element.parentNode.insertBefore(error, element.nextSibling);
-    element.classList.add("input-error");
-}
-
-function clearErrors(elements) {
-    elements.forEach(el => {
-        el.classList.remove("input-error");
-        const next = el.nextSibling;
-        if (next && next.classList && next.classList.contains("error-message")) {
-            next.remove();
+  initCartPage: () => {
+    cartFunctions.renderCartItems();
+    
+    // Event delegation for cart item actions
+    document.getElementById('cart-items')?.addEventListener('click', (e) => {
+      const cartItem = e.target.closest('.cart-item');
+      if (!cartItem) return;
+      
+      const productId = parseInt(cartItem.dataset.id);
+      
+      if (e.target.closest('.minus')) {
+        const item = state.cart.find(item => item.id === productId);
+        if (item && item.quantity > 1) {
+          cartFunctions.updateQuantity(productId, item.quantity - 1);
         }
+      } else if (e.target.closest('.plus')) {
+        const item = state.cart.find(item => item.id === productId);
+        if (item) {
+          cartFunctions.updateQuantity(productId, item.quantity + 1);
+        }
+      } else if (e.target.closest('.remove-item')) {
+        cartFunctions.removeFromCart(productId);
+      }
     });
-}
+    
+    // Checkout button
+    document.getElementById('checkout-btn')?.addEventListener('click', () => {
+      alert('Checkout functionality would be implemented here!');
+      // In a real app, this would redirect to a checkout page
+    });
+  },
 
-function validateEmail(email) {
-    const re = /^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$/;
-    return re.test(email);
-}
+  initContactPage: () => {
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+        const answer = question.nextElementSibling;
+        const icon = question.querySelector('i');
+        
+        answer.classList.toggle('active');
+        icon.classList.toggle('fa-chevron-down');
+        icon.classList.toggle('fa-chevron-up');
+      });
+    });
+    
+    // Contact form
+    const contactForm = document.getElementById('contact-form');
+    contactForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(contactForm);
+      const formStatus = document.getElementById('form-status');
+      
+      // Simulate form submission
+      formStatus.textContent = "Message sent successfully! We'll contact you soon.";
+      formStatus.style.color = "#4CAF50";
+      contactForm.reset();
+      
+      setTimeout(() => {
+        formStatus.textContent = "";
+      }, 5000);
+    });
+  },
+
+  initAboutPage: () => {
+    // Testimonial slider
+    let currentTestimonial = 0;
+    const testimonials = document.querySelectorAll('.testimonial');
+    
+    function showTestimonial(index) {
+      testimonials.forEach((testimonial, i) => {
+        testimonial.style.display = i === index ? 'block' : 'none';
+      });
+    }
+    
+    // Auto-rotate testimonials
+    if (testimonials.length > 1) {
+      setInterval(() => {
+        currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+        showTestimonial(currentTestimonial);
+      }, 5000);
+    }
+  }
+};
+
+// ========== GENERAL UTILITIES ==========
+const utils = {
+  setupMobileMenu: () => {
+    elements.hamburger?.addEventListener('click', () => {
+      elements.navLinks.classList.toggle('active');
+      elements.hamburger.innerHTML = elements.navLinks.classList.contains('active') 
+        ? '✕' 
+        : '☰';
+    });
+  },
+
+  setupStickyNav: () => {
+    window.addEventListener('scroll', () => {
+      elements.nav?.classList.toggle('scrolled', window.scrollY > 50);
+    });
+  },
+
+  handleAddToCart: () => {
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('add-to-cart')) {
+        const productId = parseInt(e.target.closest('.product-card').dataset.id);
+        cartFunctions.addToCart(productId);
+        
+        // Visual feedback
+        const btn = e.target;
+        btn.innerHTML = '<i class="fas fa-check"></i> Added';
+        setTimeout(() => {
+          btn.textContent = 'Add to Cart';
+        }, 2000);
+      }
+    });
+  }
+};
+
+// ========== INITIALIZATION ==========
+document.addEventListener('DOMContentLoaded', () => {
+  // General setup
+  utils.setupMobileMenu();
+  utils.setupStickyNav();
+  utils.handleAddToCart();
+  cartFunctions.updateCartCount();
+  
+  // Page-specific initialization
+  if (document.querySelector('.home-page')) pageFunctions.initHomePage();
+  if (document.querySelector('.category-page')) pageFunctions.initCategoriesPage();
+  if (document.querySelector('.cart-page')) pageFunctions.initCartPage();
+  if (document.querySelector('.contact-page')) pageFunctions.initContactPage();
+  if (document.querySelector('.about-page')) pageFunctions.initAboutPage();
+});
