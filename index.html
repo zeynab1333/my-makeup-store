@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zbeauty - Makeup Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<!-- Navigation Bar -->
+    <nav>
+        <div class="storeName">
+           💄 Zbeauty
+        </div>
+        <ul class="navbar">
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#categories">Categories</a></li>
+            <li><a href="#cart">Cart</a></li>
+            <li><a href="#checkout">Checkout</a></li>
+            <li><a href="#about" >About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+<div class="blurredBackground">
+    <!-- Home Page Section -->
+    <section id="home">
+        <h1 id="opening">Welcome to Zbeauty!</h1>
+        <p id="goToStore">Your go-to store for all things beauty. Shop our top products below!</p>
+        <div class="button-container">
+     <button onclick="scrollToCategories()">Shop Now</button>
+        </div>
+          <h2 class="section-heading">Featured Products</h2>
+       <div id="featured-products">
+        <div class="product">
+                <img src="https://images.pexels.com/photos/12344805/pexels-photo-12344805.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Foundation" class="product-image">
+                <h3>MAC Studio Fix Foundation</h3>
+                <p>Perfect coverage for a flawless look.</p>
+                <p class="price">$25.00</p>
+                <button onclick="addToCart('Foundation')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="https://images.pexels.com/photos/3060257/pexels-photo-3060257.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Lipstick" class="product-image">
+                <h3>Huda Beauty Nude Lipstick - Dark red</h3>
+                <p>Get the perfect pout with our lipstick range.</p>
+                <p class="price">$15.00</p>
+                <button onclick="addToCart('Lipstick')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="https://images.pexels.com/photos/2639947/pexels-photo-2639947.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Eyeshadow" class="product-image">
+                <h3>Maybelline Smoky Eyeshadow Palette</h3>
+                <p>Create vibrant looks with our eyeshadow collection.</p>
+                <p class="price">$20.00</p>
+                <button onclick="addToCart('Eyeshadow')">Add to Cart</button>
+            </div>
+            <div class="product">
+        <img src="https://images.pexels.com/photos/2637820/pexels-photo-2637820.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Mascara" class="product-image">
+        <h3>Maybelline Lash Sensational Mascara</h3>
+        <p>Define and lengthen your lashes with ease.</p>
+        <p class="price">$18.00</p>
+        <button onclick="addToCart('Mascara')">Add to Cart</button>
+            </div>
+            <div class="product">
+        <img src="https://images.pexels.com/photos/14483746/pexels-photo-14483746.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Blush" class="product-image">
+        <h3>Milani Baked Blush</h3>
+        <p>Get a natural flush of color with our blushes.</p>
+        <p class="price">$12.00</p>
+        <button onclick="addToCart('Blush')">Add to Cart</button>
+    </div>
+       <div class="product">
+        <img src="https://images.pexels.com/photos/5424112/pexels-photo-5424112.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load" alt="Highlighter" class="product-image">
+        <h3>Fenty Beauty Killawatt Highlighter</h3>
+        <p>Glow like never before with our shimmering highlighter.</p>
+        <p class="price">$14.00</p>
+        <button onclick="addToCart('Highlighter')">Add to Cart</button>
+    </div>
+      </div>
+    </section>
+
+    <!-- Categories Section -->
+     <h2 class="section-heading">Product Categories</h2>
+    <section id="categories">
+       <div class="category">
+            <h3>Face products</h3>
+            <img src="https://images.pexels.com/photos/9348325/pexels-photo-9348325.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Foundation" class="product-image">
+            <p>Explore our wide range of foundations.</p>
+            <p class="numberOfProducts">140 products</p>
+            <button onclick="addToCart('Foundation')">Add to Cart</button>
+        </div>
+        <div class="category">
+            <h3>Lipstick shades</h3>
+            <img src="https://images.pexels.com/photos/1161931/pexels-photo-1161931.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Lipstick" class="product-image">
+            <p>Find your perfect shade of lipstick.</p>
+             <p  class="numberOfProducts">10 shades</p>
+            <button onclick="addToCart('Lipstick')">Add to Cart</button>
+        </div>
+        <div class="category">
+            <h3>Eye products</h3>
+            <img src="https://images.pexels.com/photos/3912572/pexels-photo-3912572.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Eyeshadow" class="product-image">
+            <p>Vibrant shades for all your eye makeup needs.</p>
+             <p  class="numberOfProducts">100 products</p>
+            <button onclick="addToCart('Eyeshadow')">Add to Cart</button>
+        </div>
+         <div class="category">
+        <h3>Lashes product</h3>
+        <img src="https://images.pexels.com/photos/16465930/pexels-photo-16465930/free-photo-of-brown-eye-of-a-young-woman.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Mascara" class="product-image">
+        <p>Define and lengthen your lashes with ease.</p>
+         <p  class="numberOfProducts">50 products</p>
+        <button onclick="addToCart('Mascara')">Add to Cart</button>
+    </div>
+     <div class="category">
+        <h3>Blush types</h3>
+        <img src="https://images.pexels.com/photos/14813800/pexels-photo-14813800.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Blush" class="product-image">
+        <p>Get a natural flush of color with our blushes.</p>
+         <p  class="numberOfProducts">5 types</p>
+        <button onclick="addToCart('Blush')">Add to Cart</button>
+    </div>
+      <div class="category">
+    <h3>Highlighter types</h3>
+    <img src="https://images.pexels.com/photos/12698452/pexels-photo-12698452.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Highlighter" class="product-image">
+    <p>Glow up your look with our luminous highlighters.</p>
+     <p  class="numberOfProducts">3 types</p>
+    <button onclick="addToCart('Highlighter')">Add to Cart</button>
+</div>
+</section>
+   </div>
+
+    <!-- Product Detail Modal -->
+    <div id="product-details-modal" class="modal" style="display:none;">
+        <h2>Product Details</h2>
+        <div id="product-details-content">
+            <!-- Product details will show here -->
+        </div>
+        <button onclick="closeModal()">Close</button>
+    </div>
+
+    <!-- Shopping Cart Section -->
+    <section id="cart">
+        <h2>Your Cart</h2>
+        <div id="cart-items">
+            <p>Your cart is empty.</p>
+        </div>
+        <button onclick="checkout()"> <i class="fas fa-shopping-cart"></i>Proceed to Checkout</button>
+    </section>
+
+    <!-- Checkout Section -->
+    <section id="checkout" style="display:none;">
+        <h2>Checkout</h2>
+        <form id="checkout-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br>
+            <label for="address">Shipping Address:</label>
+            <input type="text" id="address" name="address" required><br>
+            <label for="payment">Payment Method:</label>
+            <select id="payment" name="payment" required>
+                <option value="credit">Credit Card</option>
+                <option value="paypal">PayPal</option>
+            </select><br>
+            <button type="submit">Complete Purchase</button>
+        </form>
+    </section>
+
+    <!-- About Section -->
+<!-- About Section -->
+<section id="about">
+    <h2  class="aboutMe">About Zbeauty</h2>
+    <div class="about-container">
+        <div class="about-text">
+            <p>Zbeauty was founded in 2024 to meet the growing demand for makeup products, so we created an online store so that we can deliver your items without struggling to go out. So Zbeauty  is your trusted online store for high-quality, affordable makeup. We believe every woman deserves to feel beautiful, confident, and radiant — and that starts with the right products.</p>
+            <p>From flawless foundations to bold lipsticks and shimmering highlighters, we bring you a carefully selected collection of the best in beauty.</p>
+            <div class="founder-section">
+  <h3>Meet the Founder</h3>
+  <p><strong>Zeynab Feysal</strong>, a passionate beauty lover and entrepreneur, started Zbeauty in 2024 with a mission to make beauty products more accessible for everyone in Kenya. Her goal is to help every woman feel confident in her skin without breaking the bank.</p>
+<br><br>
+  <h4>Our Team</h4>
+  <p>Our growing team is made up of creative, dedicated individuals who are committed to delivering the best beauty experience — from curating top-notch products to ensuring smooth delivery right to your door.</p>
+</div>
+</div>
+        <div class="about-images">
+            <img src="https://images.pexels.com/photos/1926620/pexels-photo-1926620.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Makeup 1">
+            <img src="https://images.pexels.com/photos/3018845/pexels-photo-3018845.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Makeup 2">
+        </div>
+    </div>
+</section>
+
+
+<!-- Contact Section -->
+<section id="contact">
+    <h2 class="section-heading">Contact Us</h2>
+  <!-- <h2>Contact Us</h2> -->
+  <div class="contact-container">
+    <!-- Contact Info -->
+    <div class="contact-info">
+      <p><i class="fas fa-envelope"></i><strong>Email:</strong> zbeauty@gmail.com</p>
+      <p><i class="fas fa-phone"></i><strong>Phone:</strong> +254 712 345678</p>
+      <p><i class="fas fa-map-marker-alt"></i><strong>Location:</strong> Nairobi, Kenya</p>
+    </div>
+
+    
+
+    <!-- Contact Form -->
+    <form id="contact-form">
+        <p class="info">Let us know how we can help you.</p>
+      <label for="user-name">Your Name:</label>
+      <input type="text" id="user-name" name="user-name" placeholder="Enter Your Name" required>
+
+      <label for="user-email">Email Address:</label>
+      <input type="email" id="user-email" name="user-email" placeholder="Enter Your Email" required>
+
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" rows="4" placeholder="Enter Your Message" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-section about">
+      <h2>Zbeauty</h2>
+      <p>Your trusted source for premium makeup and beauty products.</p>
+    </div>
+
+    <div class="footer-section links">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Shop</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section social">
+      <h3>Follow Us</h3>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    &copy; 2025 Zbeauty. All rights reserved.
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
