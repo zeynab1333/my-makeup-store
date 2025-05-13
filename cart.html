@@ -1,44 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Similar head as index.html -->
-    <title>Zbeauty - Your Shopping Cart</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | Zbeauty</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <!-- Same navigation as index.html -->
+    <!-- Navigation same as index.html -->
 
     <main class="cart-page">
-        <h1>Your Shopping Bag</h1>
-        <div class="cart-container">
-            <div class="cart-items" id="cart-items">
-                <!-- Cart items loaded via JavaScript -->
-                <div class="empty-cart">
-                    <i class="fas fa-shopping-bag"></i>
-                    <p>Your cart is empty</p>
-                    <a href="categories.html" class="btn">Continue Shopping</a>
-                </div>
-            </div>
+        <div class="cart-header" style="background-image: url('https://images.unsplash.com/photo-1607602132700-06825813f31c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80')">
+            <h1>Your Shopping Bag</h1>
+        </div>
 
-            <div class="cart-summary">
-                <h3>Order Summary</h3>
-                <div class="summary-row">
-                    <span>Subtotal</span>
-                    <span id="subtotal">$0.00</span>
-                </div>
-                <div class="summary-row">
-                    <span>Shipping</span>
-                    <span>Free</span>
-                </div>
-                <div class="summary-row total">
-                    <span>Total</span>
-                    <span id="total">$0.00</span>
-                </div>
-                <button id="checkout-btn" class="btn" disabled>Proceed to Checkout</button>
-            </div>
+        <div class="cart-container">
+            <!-- Cart items loaded via JavaScript -->
         </div>
     </main>
 
-    <!-- Same footer as index.html -->
-    <script src="assets/js/script.js" type="module"></script>
+    <!-- Footer same as index.html -->
+    <script src="script.js" type="module"></script>
 </body>
 </html>

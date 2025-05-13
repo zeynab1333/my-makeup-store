@@ -1,44 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Similar head as index.html -->
-    <title>Zbeauty - Shop Categories</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Makeup | Zbeauty</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <!-- Same navigation as index.html -->
+    <!-- Navigation same as index.html -->
 
     <main class="category-page">
-        <div class="category-filters">
-            <h2>Filter Products</h2>
-            <div class="filter-section">
-                <h3>Category</h3>
-                <ul class="category-list">
-                    <li><a href="#" data-category="all">All Products</a></li>
-                    <li><a href="#" data-category="lips">Lips</a></li>
-                    <li><a href="#" data-category="eyes">Eyes</a></li>
-                    <li><a href="#" data-category="face">Face</a></li>
-                </ul>
-            </div>
-            <!-- More filters -->
+        <div class="category-header" style="background-image: url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80')">
+            <h1>Our Products</h1>
         </div>
 
-        <div class="products-container">
-            <div class="sort-options">
-                <span>Sort by:</span>
-                <select id="sort-select">
-                    <option value="price-asc">Price: Low to High</option>
-                    <option value="price-desc">Price: High to Low</option>
-                    <option value="rating">Top Rated</option>
-                    <option value="newest">Newest</option>
-                </select>
+        <div class="category-container">
+            <div class="category-filters">
+                <!-- Filter options -->
             </div>
-            <div class="products-grid" id="all-products">
-                <!-- Products loaded via JavaScript -->
+            <div class="products-container">
+                <div class="products-grid" id="all-products">
+                    <!-- Products loaded via JavaScript -->
+                </div>
             </div>
         </div>
     </main>
 
-    <!-- Same footer as index.html -->
-    <script src="assets/js/script.js" type="module"></script>
+    <!-- Footer same as index.html -->
+    <script src="script.js" type="module"></script>
 </body>
 </html>
