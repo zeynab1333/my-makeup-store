@@ -545,3 +545,95 @@ input, select {
     background-color:#d63384; 
 }
 
+/* Toast Notification Styles */
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #d63384;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    padding: 16px;
+    position: fixed;
+    z-index: 10000;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+    opacity: 0;
+    transition: opacity 0.5s, visibility 0.5s;
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Hamburger Menu Styles */
+.hamburger {
+    display: none;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .hamburger {
+        display: block;
+    }
+    .navbar {
+        display: none;
+        flex-direction: column;
+        background-color: rgb(216, 100, 120);
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        border-radius: 0 0 0 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 1000;
+    }
+    .navbar.show {
+        display: flex;
+    }
+    .navbar li {
+        margin: 10px 0;
+        text-align: right;
+        padding-right: 20px;
+    }
+}
+
+/* Animations */
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.product, .category {
+    animation: fadeInScale 0.5s ease forwards;
+}
+
+/* Modal content styling */
+#product-details-content {
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+.error-message {
+    color: #d63384;
+    font-size: 0.9em;
+    margin-top: 4px;
+    display: block;
+}
+
+.input-error {
+    border-color: #d63384;
+    background-color: #ffe6f0;
+}
+
